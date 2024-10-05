@@ -1,7 +1,7 @@
 import vue from 'eslint-plugin-vue'
 import typescript from '@typescript-eslint/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
-import prettier from 'eslint-config-prettier'
+import vueParser from 'vue-eslint-parser'
 
 export default [
   {
@@ -20,23 +20,25 @@ export default [
       ...vue.configs['vue3-recommended'].rules,
       ...typescript.configs['recommended'].rules,
 
-      semi: ['error', 'always'],
+      semi: ['error', 'never'],
+      quotes: [
+        'error',
+        'single',
+        {
+          allowTemplateLiterals: true,
+        },
+      ],
       'no-unused-vars': 'warn',
       '@typescript-eslint/no-unused-vars': 'warn',
       'vue/multi-word-component-names': 'off',
     },
   },
   {
-    files: ['*.ts', '*.js', '*.vue'],
-    rules: {
-      ...prettier.rules,
-      'prettier/prettier': [
-        'error',
-        {
-          endOfLine: 'auto',
-          singleQuote: true,
-        },
-      ],
+    files: ['**/*.vue'],
+    languageOptions: {
+      parser: vueParser,
+      ecmaVersion: 'latest',
+      sourceType: 'module',
     },
   },
 ]
