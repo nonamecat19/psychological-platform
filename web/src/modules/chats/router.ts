@@ -1,10 +1,10 @@
-import ChatView from "./views/ChatView.vue"
+import ChatView from './views/ChatView.vue'
 
 export const chatRouter = {
-  path: "/chat",
+  path: '/chat',
   children: [
     {
-      path: "",
+      path: '',
       component: ChatView,
     },
   ],
