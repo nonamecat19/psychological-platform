@@ -3,5 +3,14 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "@app/*": ["./src/app/*"],
+      "@core/*": ["./src/core/*"],
+      "@chats/*": ["./src/modules/chats/*"],
+      "@support/*": ["./src/modules/support/*"]
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import {supportRouter} from "../modules/support";
-import {chatRouter} from "../modules/chats";
+import {supportRouter} from "@support";
+import {chatRouter} from "@chats";
 
 const routes = [
   chatRouter,
