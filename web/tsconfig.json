@@ -6,7 +6,6 @@
   ],
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"],
       "@app/*": ["./src/app/*"],
       "@core/*": ["./src/core/*"],
       "@chats/*": ["./src/modules/chats/*"],

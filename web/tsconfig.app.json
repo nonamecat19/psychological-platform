@@ -18,7 +18,17 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@app/*": ["./src/app/*"],
+      "@app": ["./src/app"],
+      "@core/*": ["./src/core/*"],
+      "@core": ["./src/core"],
+      "@chats/*": ["./src/modules/chats/*"],
+      "@chats": ["./src/modules/chats"],
+      "@support/*": ["./src/modules/support/*"],
+      "@support": ["./src/modules/support"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }
