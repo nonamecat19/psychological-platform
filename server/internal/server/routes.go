@@ -2,23 +2,21 @@ package server
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"log"
+	"server/internal/repository"
 )
 
 func (s *FiberServer) RegisterFiberRoutes() {
 	s.App.Get("/", s.HelloWorldHandler)
-
-	s.App.Get("/health", s.healthHandler)
-
 }
 
 func (s *FiberServer) HelloWorldHandler(c *fiber.Ctx) error {
-	resp := fiber.Map{
-		"message": "Hello World",
-	}
+	var usersRepository = repository.NewUserRepository()
+	users, _ := usersRepository.FindAll()
 
-	return c.JSON(resp)
-}
+	log.Println(users)
 
-func (s *FiberServer) healthHandler(c *fiber.Ctx) error {
-	return c.JSON(s.db.Health())
+	return c.JSON(fiber.Map{
+		"message": users,
+	})
 }
