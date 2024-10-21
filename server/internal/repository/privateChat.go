@@ -33,9 +33,9 @@ func (r *PrivateChatRepository) GetOne(id uint) (model.PrivateChat, error) {
 	return chat, err
 }
 
-func (r *PrivateChatRepository) UpdateOne(id uint, data model.PrivateChat) (model.PrivateChat, error) {
+func (r *PrivateChatRepository) UpdateOne(data model.PrivateChat) (model.PrivateChat, error) {
 	var chat model.PrivateChat
-	err := r.db.First(&chat, id).Error
+	err := r.db.First(&chat, data.ID).Error
 	if err != nil {
 		return chat, err
 	}

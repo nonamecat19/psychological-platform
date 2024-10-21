@@ -33,9 +33,9 @@ func (r *UserRepository) GetOne(id uint) (model.User, error) {
 	return user, err
 }
 
-func (r *UserRepository) UpdateOne(id uint, data model.User) (model.User, error) {
+func (r *UserRepository) UpdateOne(data model.User) (model.User, error) {
 	var user model.User
-	err := r.db.First(&user, id).Error
+	err := r.db.First(&user, data.ID).Error
 	if err != nil {
 		return user, err
 	}
@@ -45,4 +45,8 @@ func (r *UserRepository) UpdateOne(id uint, data model.User) (model.User, error)
 
 func (r *UserRepository) DeleteOne(id uint) error {
 	return r.db.Delete(&model.User{}, id).Error
+}
+
+type MessageRepository struct {
+	db *gorm.DB
 }

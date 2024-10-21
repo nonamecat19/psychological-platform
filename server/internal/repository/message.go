@@ -1,14 +1,9 @@
 package repository
 
 import (
-	"gorm.io/gorm"
 	"server/internal/database"
 	"server/internal/model"
 )
-
-type MessageRepository struct {
-	db *gorm.DB
-}
 
 func NewMessageRepository() *MessageRepository {
 	return &MessageRepository{
@@ -33,9 +28,9 @@ func (r *MessageRepository) GetOne(id uint) (model.Message, error) {
 	return message, err
 }
 
-func (r *MessageRepository) UpdateOne(id uint, data model.Message) (model.Message, error) {
+func (r *MessageRepository) UpdateOne(data model.Message) (model.Message, error) {
 	var message model.Message
-	err := r.db.First(&message, id).Error
+	err := r.db.First(&message, data.ID).Error
 	if err != nil {
 		return message, err
 	}

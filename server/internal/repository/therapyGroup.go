@@ -33,9 +33,9 @@ func (r *TherapyGroupRepository) GetOne(id uint) (model.TherapyGroup, error) {
 	return group, err
 }
 
-func (r *TherapyGroupRepository) UpdateOne(id uint, data model.TherapyGroup) (model.TherapyGroup, error) {
+func (r *TherapyGroupRepository) UpdateOne(data model.TherapyGroup) (model.TherapyGroup, error) {
 	var group model.TherapyGroup
-	err := r.db.First(&group, id).Error
+	err := r.db.First(&group, data.ID).Error
 	if err != nil {
 		return group, err
 	}
