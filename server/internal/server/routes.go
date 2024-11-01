@@ -38,9 +38,16 @@ func (s *FiberServer) RegisterPrivateChatRoutes() {
 	usersRouter.Delete("/:id", handlers.DeletePrivateChatHandler)
 }
 
+func (s *FiberServer) RegisterAuthRoutes() {
+	authRoutes := s.Group("/auth")
+
+	authRoutes.Post("/login", handlers.AuthLoginHandler)
+}
+
 func (s *FiberServer) RegisterFiberRoutes() {
 	s.RegisterUserRoutes()
 	s.RegisterMessagesRoutes()
 	s.RegisterTherapyGroupRoutes()
 	s.RegisterPrivateChatRoutes()
+	s.RegisterAuthRoutes()
 }

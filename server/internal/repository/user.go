@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"errors"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 	"server/internal/database"
 	"server/internal/model"
@@ -17,7 +19,15 @@ func NewUserRepository() *UserRepository {
 }
 
 func (r *UserRepository) Create(data model.User) (model.User, error) {
-	err := r.db.Create(&data).Error
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(data.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return data, err
+	}
+
+	data.Password = string(hashedPassword)
+	data.Role = "user"
+	err = r.db.Create(&data).Error
+
 	return data, err
 }
 
@@ -45,6 +55,23 @@ func (r *UserRepository) UpdateOne(data model.User) (model.User, error) {
 
 func (r *UserRepository) DeleteOne(id uint) error {
 	return r.db.Delete(&model.User{}, id).Error
+}
+
+func (r *UserRepository) FindByCredentials(email string, password string) (*model.User, error) {
+	var user model.User
+	err := r.db.Where("email = ?", email).First(&user).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return nil, errors.New("user not found")
+	} else if err != nil {
+		return nil, err
+	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	if err != nil {
+		return nil, errors.New("invalid credentials")
+	}
+
+	return &user, nil
 }
 
 type MessageRepository struct {
