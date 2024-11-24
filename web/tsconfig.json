@@ -1,15 +1,33 @@
 {
   "files": [],
   "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
   ],
   "compilerOptions": {
     "paths": {
-      "@app/*": ["./src/app/*"],
-      "@core/*": ["./src/core/*"],
-      "@chats/*": ["./src/modules/chats/*"],
-      "@support/*": ["./src/modules/support/*"]
+      "@app/*": [
+        "./src/app/*"
+      ],
+      "@core/*": [
+        "./src/core/*"
+      ],
+      "@chats/*": [
+        "./src/modules/chats/*"
+      ],
+      "@support/*": [
+        "./src/modules/support/*"
+      ],
+      "@admin/*": [
+        "./src/modules/admin/*"
+      ],
+      "@auth/*": [
+        "./src/modules/auth/*"
+      ]
     }
   }
 }
