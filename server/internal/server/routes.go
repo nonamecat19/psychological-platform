@@ -42,6 +42,7 @@ func (s *FiberServer) RegisterAuthRoutes() {
 	authRoutes := s.Group("/auth")
 
 	authRoutes.Post("/login", handlers.AuthLoginHandler)
+	authRoutes.Post("/register", handlers.AuthRegisterHandler)
 }
 
 func (s *FiberServer) RegisterFiberRoutes() {

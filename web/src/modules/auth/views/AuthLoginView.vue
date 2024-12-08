@@ -7,6 +7,7 @@ import { AxiosError } from 'axios'
 import { api } from '@core/lib/axios.ts'
 import { useRouter } from 'vue-router'
 import InputText from 'primevue/inputtext'
+import { Button } from 'primevue'
 
 const authSchema = yup.object({
   email: yup.string().required(),
@@ -71,7 +72,7 @@ const onSubmit = handleSubmit(async ({ email, password }) => {
           <small id="password-help" class="block">{{ errors.password }}</small>
         </div>
 
-        <Button type="submit" class="mt-5"> Submit </Button>
+        <Button type="submit" class="mt-5">Submit</Button>
       </form>
     </div>
   </div>

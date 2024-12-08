@@ -3,6 +3,7 @@ package handlers
 import (
 	"github.com/gofiber/fiber/v2"
 	jtoken "github.com/golang-jwt/jwt/v4"
+	"server/internal/model"
 	"server/internal/repository"
 	"time"
 )
@@ -10,6 +11,15 @@ import (
 type LoginRequest struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
+}
+
+type RegisterRequest struct {
+	Email       string `json:"email"`
+	Password    string `json:"password"`
+	Name        string `json:"name"`
+	Surname     string `json:"surname"`
+	IsAnonymous bool   `json:"isAnonymous"`
+	Role        string `json:"role"`
 }
 
 type LoginResponse struct {
@@ -32,6 +42,52 @@ func AuthLoginHandler(c *fiber.Ctx) error {
 			"error": err.Error(),
 		})
 	}
+	day := time.Hour * 24
+	claims := jtoken.MapClaims{
+		"ID":    user.ID,
+		"email": user.Email,
+		"exp":   time.Now().Add(day * 1).Unix(),
+	}
+
+	token := jtoken.NewWithClaims(jtoken.SigningMethodHS256, claims)
+	t, err := token.SignedString([]byte("secret"))
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	return c.JSON(LoginResponse{
+		Token: t,
+	})
+}
+
+func AuthRegisterHandler(c *fiber.Ctx) error {
+	userRepository := repository.NewUserRepository()
+
+	registerRequest := new(RegisterRequest)
+	if err := c.BodyParser(registerRequest); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	newUser := model.User{
+		Name:        &registerRequest.Name,
+		Surname:     &registerRequest.Surname,
+		IsAnonymous: registerRequest.IsAnonymous,
+		Role:        registerRequest.Role,
+		Email:       registerRequest.Email,
+		Password:    registerRequest.Password,
+	}
+
+	user, err := userRepository.Create(newUser)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
 	day := time.Hour * 24
 	claims := jtoken.MapClaims{
 		"ID":    user.ID,
