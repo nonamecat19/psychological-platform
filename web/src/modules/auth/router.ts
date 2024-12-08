@@ -6,5 +6,9 @@ export const authRouter = {
       path: 'login',
       component: () => import('./views/AuthLoginView.vue'),
     },
+    {
+      path: 'register',
+      component: () => import('./views/AuthRegisterView.vue'),
+    },
   ],
 }
