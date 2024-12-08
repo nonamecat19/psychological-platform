@@ -14,6 +14,13 @@ func GetAllUsersHandler(c *fiber.Ctx) error {
 	return c.JSON(users)
 }
 
+func GetAllPsychologistsHandler(c *fiber.Ctx) error {
+	usersRepository := repository.NewUserRepository()
+	users, _ := usersRepository.FindAllPsychologists()
+
+	return c.JSON(users)
+}
+
 func CreateUserHandler(c *fiber.Ctx) error {
 	usersRepository := repository.NewUserRepository()
 

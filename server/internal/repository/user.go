@@ -37,6 +37,12 @@ func (r *UserRepository) FindAll() ([]model.User, error) {
 	return users, err
 }
 
+func (r *UserRepository) FindAllPsychologists() ([]model.User, error) {
+	var users []model.User
+	err := r.db.Where("role = ?", "psychologist").Find(&users).Error
+	return users, err
+}
+
 func (r *UserRepository) GetOne(id uint) (model.User, error) {
 	var user model.User
 	err := r.db.First(&user, id).Error

@@ -6,6 +6,7 @@ func (s *FiberServer) RegisterUserRoutes() {
 	usersRouter := s.Group("/users")
 
 	usersRouter.Get("/", handlers.GetAllUsersHandler)
+	usersRouter.Get("/psychologists", handlers.GetAllPsychologistsHandler)
 	usersRouter.Post("/", handlers.CreateUserHandler)
 	usersRouter.Patch("/", handlers.UpdateUserHandler)
 	usersRouter.Delete("/:id", handlers.DeleteUserHandler)
