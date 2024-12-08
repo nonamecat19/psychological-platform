@@ -12,5 +12,3 @@ onMounted(() => {
 <template>
   <div>{{ JSON.stringify(store.data) }}</div>
 </template>
-
-<style scoped></style>

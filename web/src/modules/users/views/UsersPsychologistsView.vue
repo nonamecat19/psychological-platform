@@ -28,5 +28,3 @@ function contactPsychologist(id) {
     </Column>
   </DataTable>
 </template>
-
-<style scoped></style>
