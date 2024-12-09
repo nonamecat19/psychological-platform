@@ -14,6 +14,44 @@ func GetAllPrivateChatsHandler(c *fiber.Ctx) error {
 	return c.JSON(privateChats)
 }
 
+func GetMyPrivateChatsHandler(c *fiber.Ctx) error {
+	privateChatsRepository := repository.NewPrivateChatRepository()
+	privateChats, _ := privateChatsRepository.FindAll()
+
+	return c.JSON(privateChats)
+}
+
+func GetPrivateChatIdByUserId(c *fiber.Ctx) error {
+	user := GetUserAuthInfo(c)
+	intId, _ := strconv.Atoi(c.Params("id"))
+	id := uint(intId)
+
+	privateChatsRepository := repository.NewPrivateChatRepository()
+
+	if user.Role == "user" {
+		chat, err := privateChatsRepository.FindConcreteChat(user.ID, id)
+		if err == nil {
+			return c.JSON(chat.ID)
+		}
+		if err.Error() == "record not found" {
+			chat, _ = privateChatsRepository.CreateConcreteChat(user.ID, id)
+			return c.JSON(chat.ID)
+		}
+		panic(err)
+	}
+	if user.Role == "psychologist" {
+		chat, err := privateChatsRepository.FindConcreteChat(id, user.ID)
+		if err == nil {
+			return c.JSON(chat.ID)
+		}
+		if err.Error() == "record not found" {
+			chat, _ = privateChatsRepository.CreateConcreteChat(id, user.ID)
+			return c.JSON(chat.ID)
+		}
+	}
+	panic("Invalid role")
+}
+
 func CreatePrivateChatHandler(c *fiber.Ctx) error {
 	privateChatsRepository := repository.NewPrivateChatRepository()
 

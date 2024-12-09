@@ -26,12 +26,12 @@ const router = useRouter()
 
 const onSubmit = handleSubmit(async ({ email, password }) => {
   try {
-    const { data } = await api.post<{ accessToken: string }>('/auth/login', {
+    const { data } = await api.post<{ token: string }>('/auth/login', {
       email,
       password,
     })
 
-    localStorage.setItem('token', data.accessToken)
+    localStorage.setItem('token', data.token)
     await router.push('/')
   } catch (error) {
     if (error instanceof AxiosError) {

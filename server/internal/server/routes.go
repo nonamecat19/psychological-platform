@@ -4,6 +4,7 @@ import "server/internal/server/handlers"
 
 func (s *FiberServer) RegisterUserRoutes() {
 	usersRouter := s.Group("/users")
+	usersRouter.Use(handlers.AuthMiddleware)
 
 	usersRouter.Get("/", handlers.GetAllUsersHandler)
 	usersRouter.Get("/psychologists", handlers.GetAllPsychologistsHandler)
@@ -13,30 +14,35 @@ func (s *FiberServer) RegisterUserRoutes() {
 }
 
 func (s *FiberServer) RegisterMessagesRoutes() {
-	usersRouter := s.Group("/messages")
+	messagesRouter := s.Group("/messages")
+	messagesRouter.Use(handlers.AuthMiddleware)
 
-	usersRouter.Get("/", handlers.GetAllMessagesHandler)
-	usersRouter.Post("/", handlers.CreateMessageHandler)
-	usersRouter.Patch("/", handlers.UpdateMessageHandler)
-	usersRouter.Delete("/:id", handlers.DeleteMessageHandler)
+	messagesRouter.Get("/", handlers.GetAllMessagesHandler)
+	messagesRouter.Post("/", handlers.CreateMessageHandler)
+	messagesRouter.Patch("/", handlers.UpdateMessageHandler)
+	messagesRouter.Delete("/:id", handlers.DeleteMessageHandler)
 }
 
 func (s *FiberServer) RegisterTherapyGroupRoutes() {
-	usersRouter := s.Group("/therapy-group")
+	therapyGroupRouter := s.Group("/therapy-group")
+	therapyGroupRouter.Use(handlers.AuthMiddleware)
 
-	usersRouter.Get("/", handlers.GetAllTherapyGroupsHandler)
-	usersRouter.Post("/", handlers.CreateTherapyGroupHandler)
-	usersRouter.Patch("/", handlers.UpdateTherapyGroupHandler)
-	usersRouter.Delete("/:id", handlers.DeleteTherapyGroupHandler)
+	therapyGroupRouter.Get("/", handlers.GetAllTherapyGroupsHandler)
+	therapyGroupRouter.Post("/", handlers.CreateTherapyGroupHandler)
+	therapyGroupRouter.Patch("/", handlers.UpdateTherapyGroupHandler)
+	therapyGroupRouter.Delete("/:id", handlers.DeleteTherapyGroupHandler)
 }
 
 func (s *FiberServer) RegisterPrivateChatRoutes() {
-	usersRouter := s.Group("/therapy-group")
+	privateChatRouter := s.Group("/private-chat")
+	privateChatRouter.Use(handlers.AuthMiddleware)
 
-	usersRouter.Get("/", handlers.GetAllPrivateChatsHandler)
-	usersRouter.Post("/", handlers.CreatePrivateChatHandler)
-	usersRouter.Patch("/", handlers.UpdatePrivateChatHandler)
-	usersRouter.Delete("/:id", handlers.DeletePrivateChatHandler)
+	privateChatRouter.Get("/", handlers.GetAllPrivateChatsHandler)
+	privateChatRouter.Get("/my", handlers.GetMyPrivateChatsHandler)
+	privateChatRouter.Get("/get-by-user/:id", handlers.GetPrivateChatIdByUserId)
+	privateChatRouter.Post("/", handlers.CreatePrivateChatHandler)
+	privateChatRouter.Patch("/", handlers.UpdatePrivateChatHandler)
+	privateChatRouter.Delete("/:id", handlers.DeletePrivateChatHandler)
 }
 
 func (s *FiberServer) RegisterAuthRoutes() {

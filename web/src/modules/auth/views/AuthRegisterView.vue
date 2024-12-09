@@ -23,8 +23,8 @@ const authSchema = yup.object({
   password: yup.string().required(),
   name: yup.string().required(),
   surname: yup.string().required(),
-  isAnonymous: yup.object({name: yup.string(), code: yup.string()}),
-  role: yup.object({name: yup.string(), code: yup.string()}).required(),
+  isAnonymous: yup.object({ name: yup.string(), code: yup.string() }),
+  role: yup.object({ name: yup.string(), code: yup.string() }).required(),
 })
 
 const { defineField, handleSubmit, errors } = useForm({
@@ -41,30 +41,31 @@ const [role] = defineField('role')
 const toast = useToast()
 const router = useRouter()
 
-
-const onSubmit = handleSubmit(async ({ email, password, name, surname, isAnonymous, role }) => {
-  try {
-    const { data } = await api.post<{ accessToken: string }>('/auth/register', {
-      email,
-      password,
-      name,
-      surname,
-      isAnonymous: isAnonymous.code === 'yes',
-      role: role.code
-    })
-
-    localStorage.setItem('token', data.accessToken)
-    await router.push('/')
-  } catch (error) {
-    if (error instanceof AxiosError) {
-      toast.add({
-        severity: 'error',
-        summary: error.response?.data.message,
-        life: 2000,
+const onSubmit = handleSubmit(
+  async ({ email, password, name, surname, isAnonymous, role }) => {
+    try {
+      const { data } = await api.post<{ token: string }>('/auth/register', {
+        email,
+        password,
+        name,
+        surname,
+        isAnonymous: isAnonymous.code === 'yes',
+        role: role.code,
       })
+
+      localStorage.setItem('token', data.token)
+      await router.push('/')
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast.add({
+          severity: 'error',
+          summary: error.response?.data.message,
+          life: 2000,
+        })
+      }
     }
-  }
-})
+  },
+)
 </script>
 
 <template>
@@ -125,7 +126,9 @@ const onSubmit = handleSubmit(async ({ email, password, name, surname, isAnonymo
             aria-describedby="isAnonymous-help"
             :class="{ 'p-invalid': errors.isAnonymous }"
           />
-          <small id="isAnonymous-help" class="block">{{ errors.isAnonymous }}</small>
+          <small id="isAnonymous-help" class="block">{{
+            errors.isAnonymous
+          }}</small>
         </div>
 
         <div>

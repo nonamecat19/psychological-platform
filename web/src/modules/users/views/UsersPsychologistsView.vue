@@ -1,17 +1,22 @@
-<script setup>
+<script setup lang="ts">
 import { usePsychologistsStore } from '../store/usePsychologistsStore'
 import { onMounted } from 'vue'
 import { Button, Column, DataTable } from 'primevue'
+import { useRouter } from 'vue-router'
+import { api } from '@core/lib/axios'
 
 const store = usePsychologistsStore()
+const router = useRouter()
 
 onMounted(() => {
   store.init()
 })
 
-
-function contactPsychologist(id) {
-  console.log('Contact psychologist with ID:', id)
+async function contactPsychologist(id) {
+  const { data } = await api.get<{ token: string }>(
+    `/private-chat/get-by-user/${id}`,
+  )
+  await router.push(`/chat/${data}`)
 }
 </script>
 
