@@ -3,9 +3,10 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 // @ts-expect-error
 import eslint from 'vite-plugin-eslint'
+import vueDevTools from 'vite-plugin-vue-devtools'
 
 export default defineConfig({
-  plugins: [vue(), eslint()],
+  plugins: [vue(), vueDevTools()],
   resolve: {
     alias: [
       {

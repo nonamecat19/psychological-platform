@@ -1,32 +1,36 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useChatsStore } from '@chats/store/useChatsStore'
+import { useChatsStore } from '@chats/store/chats.ts'
 import ChatItem from '@chats/components/ChatItem.vue'
 import { useRouter } from 'vue-router'
+import { useCurrentChatStore } from '@chats/store/currentChat.ts'
 
-const store = useChatsStore()
+const chatsStore = useChatsStore()
+const currentChatStore = useCurrentChatStore()
 
 onMounted(() => {
-  store.init()
+  chatsStore.init()
 })
 
 const router = useRouter()
 
-function selectChat(id) {
+function selectChat(id: number) {
+  currentChatStore.setCurrentChatId(id)
   router.push(`/chat/${id}`)
 }
 </script>
 <template>
-  <main class="flex h-screen">
+  <main class="flex h-screen w-full">
     <div class="border-r w-64 h-screen overflow-y-auto">
       <ChatItem
-        v-for="(chat, index) in store.data"
+        v-for="(chat, index) in chatsStore.data"
         :key="index"
         :name="chat.Specialist.Name ?? 'Anonymous'"
+        :selected="currentChatStore.currentChatId === chat.ID"
         @click="selectChat(chat.ID)"
       />
     </div>
-    <div>
+    <div class="w-full">
       <RouterView />
     </div>
   </main>

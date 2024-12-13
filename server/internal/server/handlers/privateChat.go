@@ -15,10 +15,28 @@ func GetAllPrivateChatsHandler(c *fiber.Ctx) error {
 }
 
 func GetMyPrivateChatsHandler(c *fiber.Ctx) error {
+	user := GetUserAuthInfo(c)
 	privateChatsRepository := repository.NewPrivateChatRepository()
-	privateChats, _ := privateChatsRepository.FindAll()
 
-	return c.JSON(privateChats)
+	specialistChats, _ := privateChatsRepository.FindAllBySpecialist(user.ID)
+	clientChats, _ := privateChatsRepository.FindAllByClient(user.ID)
+
+	combinedChats := append(specialistChats, clientChats...)
+
+	return c.JSON(combinedChats)
+}
+
+func GetPrivateChatById(c *fiber.Ctx) error {
+	intId, _ := strconv.Atoi(c.Params("id"))
+	id := uint(intId)
+
+	privateChatsRepository := repository.NewPrivateChatRepository()
+
+	chat, err := privateChatsRepository.FindById(id)
+	if err == nil {
+		return c.JSON(chat[0])
+	}
+	return c.JSON(fiber.Map{"message": "Chat not found"})
 }
 
 func GetPrivateChatIdByUserId(c *fiber.Ctx) error {
