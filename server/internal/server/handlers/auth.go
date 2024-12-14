@@ -48,6 +48,7 @@ func AuthLoginHandler(c *fiber.Ctx) error {
 	claims := jtoken.MapClaims{
 		"ID":    user.ID,
 		"email": user.Email,
+		"role":  user.Role,
 		"exp":   time.Now().Add(day * 1).Unix(),
 	}
 
@@ -94,6 +95,7 @@ func AuthRegisterHandler(c *fiber.Ctx) error {
 	claims := jtoken.MapClaims{
 		"ID":    user.ID,
 		"email": user.Email,
+		"role":  user.Role,
 		"exp":   time.Now().Add(day * 1).Unix(),
 	}
 

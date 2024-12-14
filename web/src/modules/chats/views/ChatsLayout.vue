@@ -20,8 +20,8 @@ function selectChat(id: number) {
 }
 </script>
 <template>
-  <main class="flex h-screen w-full">
-    <div class="border-r w-64 h-screen overflow-y-auto">
+  <main class="flex h-full w-full">
+    <div class="border-r w-64 h-full overflow-y-auto">
       <ChatItem
         v-for="(chat, index) in chatsStore.data"
         :key="index"

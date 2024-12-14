@@ -5,6 +5,8 @@ import { useCurrentChatStore } from '@chats/store/currentChat'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import { useCurrentChatSubscription } from '@chats/composables/useCurrentChatSubscription'
+import ChatMessage from '@chats/components/ChatMessage.vue'
+import { useMe } from '@core/composables/useMe.ts'
 
 const route = useRoute()
 
@@ -24,14 +26,20 @@ async function handleSendMessage() {
   inputValue.value = ''
 }
 
+const { getDecodedToken } = useMe()
+
+const me = getDecodedToken()
+
 const inputValue = ref<string>('')
 </script>
 <template>
   <div class="h-full w-full flex flex-col">
-    <div class="grow p-4">
-      <div v-for="message of currentChatStore?.data?.Messages">
-        {{ message.Content }}
-      </div>
+    <div class="grow p-4 flex flex-col gap-2">
+      <ChatMessage
+        v-for="message of currentChatStore?.data?.Messages"
+        :text="message.Content"
+        :is-mine="message.UserID === me.ID"
+      />
     </div>
     <div class="p-2 pt-0 w-full flex gap-2">
       <InputText v-model="inputValue" class="w-full" />
