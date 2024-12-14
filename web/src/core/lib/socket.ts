@@ -1,6 +1,7 @@
-import { io } from 'socket.io-client'
+//@ts-ignore
+import io from 'socket.io-client'
 
-export const socket = io('ws://localhost:8081/socket.io', {
+export const socket = io(import.meta.env.VITE_API_BASE_URL, {
   // autoConnect: false,
   // transports: ['websocket'],
 })

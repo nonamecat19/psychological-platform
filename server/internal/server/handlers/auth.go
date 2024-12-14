@@ -3,9 +3,10 @@ package handlers
 import (
 	"github.com/gofiber/fiber/v2"
 	jtoken "github.com/golang-jwt/jwt/v4"
+	"log"
+	lib "server/internal/lib"
 	"server/internal/model"
 	"server/internal/repository"
-	"strings"
 	"time"
 )
 
@@ -115,21 +116,9 @@ func AuthMiddleware(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Missing or malformed JWT"})
 	}
 
-	tokenString := strings.TrimPrefix(authHeader, "Bearer ")
-	token, err := jtoken.Parse(tokenString, func(token *jtoken.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jtoken.SigningMethodHMAC); !ok {
-			return nil, fiber.NewError(fiber.StatusUnauthorized, "Unexpected signing method")
-		}
-		return []byte("secret"), nil
-	})
-
-	if err != nil || !token.Valid {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid or expired JWT"})
-	}
-
-	claims, ok := token.Claims.(jtoken.MapClaims)
-	if !ok {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid JWT claims"})
+	claims, err := lib.GetClaimsFromJWT(authHeader)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	userRepository := repository.NewUserRepository()

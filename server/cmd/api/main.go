@@ -13,6 +13,8 @@ func main() {
 
 	api := server.New()
 	api.RegisterFiberRoutes()
+	api.RegisterFiberWsRoutes()
+
 	err := api.Listen(fmt.Sprintf(":%d", appConfig.Port))
 	log.Print(fmt.Sprintf("Server started on port: %d", appConfig.Port))
 	if err != nil {

@@ -19,10 +19,15 @@ export const useCurrentChatStore = defineStore('chats-current', () => {
     setData(response.data)
   }
 
+  function addMessage(message: unknown) {
+    data.value.Messages.push(message)
+  }
+
   return {
     data,
     currentChatId,
     setCurrentChatId,
     initCurrentChatId,
+    addMessage,
   }
 })

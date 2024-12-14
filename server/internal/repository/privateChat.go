@@ -27,6 +27,12 @@ func (r *PrivateChatRepository) FindAll() ([]model.PrivateChat, error) {
 	return chats, err
 }
 
+func (r *PrivateChatRepository) FindById(id uint) ([]model.PrivateChat, error) {
+	var chats []model.PrivateChat
+	err := r.db.Preload("Messages").Where("id = ?", id).Find(&chats).Error
+	return chats, err
+}
+
 func (r *PrivateChatRepository) FindAllByClient(id uint) ([]model.PrivateChat, error) {
 	var chats []model.PrivateChat
 	err := r.db.Where("client_id = ?", id).Find(&chats).Error

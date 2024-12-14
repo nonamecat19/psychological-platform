@@ -20,7 +20,6 @@ onMounted(() => {
 const { sendMessage } = useCurrentChatSubscription(+id.value)
 
 async function handleSendMessage() {
-  console.log('asdfasdf')
   sendMessage(inputValue.value)
   inputValue.value = ''
 }
@@ -29,7 +28,11 @@ const inputValue = ref<string>('')
 </script>
 <template>
   <div class="h-full w-full flex flex-col">
-    <div class="grow p-4">asd</div>
+    <div class="grow p-4">
+      <div v-for="message of currentChatStore?.data?.Messages">
+        {{ message.Content }}
+      </div>
+    </div>
     <div class="p-2 pt-0 w-full flex gap-2">
       <InputText v-model="inputValue" class="w-full" />
       <Button @click="handleSendMessage">

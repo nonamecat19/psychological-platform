@@ -18,7 +18,7 @@
     "pinia": "^2.2.5",
     "primeicons": "^7.0.0",
     "primevue": "^4.0.7",
-    "socket.io-client": "^2",
+    "socket.io-client": "^2.5.0",
     "vee-validate": "^4.14.6",
     "vue": "^3.4.37",
     "vue-router": "4",
@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.10.1",
+    "@types/socket.io-client": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^8.8.0",
     "@typescript-eslint/parser": "^8.8.0",
     "@vitejs/plugin-vue": "^5.1.2",

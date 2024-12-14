@@ -40,6 +40,7 @@ func (s *FiberServer) RegisterPrivateChatRoutes() {
 	privateChatRouter.Get("/", handlers.GetAllPrivateChatsHandler)
 	privateChatRouter.Get("/my", handlers.GetMyPrivateChatsHandler)
 	privateChatRouter.Get("/get-by-user/:id", handlers.GetPrivateChatIdByUserId)
+	privateChatRouter.Get("/messages/:id", handlers.GetPrivateChatById)
 	privateChatRouter.Get("/:id", handlers.GetPrivateChatById)
 	privateChatRouter.Post("/", handlers.CreatePrivateChatHandler)
 	privateChatRouter.Patch("/", handlers.UpdatePrivateChatHandler)

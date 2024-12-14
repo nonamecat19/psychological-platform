@@ -1,16 +1,18 @@
 import { onMounted, onUnmounted } from 'vue'
 import { socket } from '@core/lib/socket'
+import { useCurrentChatStore } from '@chats/store/currentChat.ts'
 
 export function useCurrentChatSubscription(chatId: number) {
-  const event = `CUSTOM_EVENT`
+  const event = `SEND_MESSAGE`
 
-  // const auctionsStore = useAuctionsStore()
+  const currentChatStore = useCurrentChatStore()
 
   onMounted(() => {
     socket.connect()
-    socket.on(event, (data) => {
-      // auctionsStore.addNewAuctionBid(auctionId, data)
+    console.log({ chatId })
+    socket.on(`${event}:${chatId}`, (data: string) => {
       console.log({ data })
+      currentChatStore.addMessage(JSON.parse(data))
     })
   })
 
@@ -20,7 +22,14 @@ export function useCurrentChatSubscription(chatId: number) {
   })
 
   function sendMessage(message: string) {
-    socket.emit(event, message)
+    socket.emit(
+      event,
+      JSON.stringify({
+        token: localStorage.getItem('token'),
+        message,
+        chatId,
+      }),
+    )
   }
 
   return {
