@@ -17,15 +17,6 @@ io.on("connection", (socket) => {
         try {
             const decoded = jwt.verify(token, "secret");
 
-
-            // const result = await Messages().insert({
-            //     chat_id: chatId,
-            //     content: message,
-            //     user_id: decoded.ID,
-            // }).returning("*");
-            // console.log({result})
-
-
             const client = await pool.connect();
             try {
                 const result = await client.query(`INSERT INTO messages (private_chat_id, content, user_id)
@@ -40,7 +31,7 @@ io.on("connection", (socket) => {
                     Content: content,
                     PrivateChatID: private_chat_id
                 }
-                    io.sockets.emit(`SEND_MESSAGE_PRIVATE:${chatId}`, JSON.stringify(normalizedMessage));
+                io.sockets.emit(`SEND_MESSAGE_PRIVATE:${chatId}`, JSON.stringify(normalizedMessage));
             } finally {
                 client.release();
             }
