@@ -11,5 +11,6 @@ func migrateDb(db *gorm.DB) error {
 		&model.PrivateChat{},
 		&model.Message{},
 		&model.TherapyGroup{},
+		&model.Article{},
 	)
 }

@@ -4,9 +4,17 @@ import { supportRouter } from '@support'
 import { adminRouter } from '../modules/admin'
 import { authRouter } from '../modules/auth'
 import { usersRouter } from '../modules/users'
+import { profileRouter } from '../modules/profile'
 import MainLayout from '@app/layouts/MainLayout.vue'
 
-const routes = [chatRouter, supportRouter, adminRouter, authRouter, usersRouter]
+const routes = [
+  chatRouter,
+  supportRouter,
+  adminRouter,
+  authRouter,
+  usersRouter,
+  profileRouter,
+]
 
 export const appRouter = createRouter({
   history: createWebHistory(),

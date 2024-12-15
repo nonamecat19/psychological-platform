@@ -8,6 +8,7 @@ func (s *FiberServer) RegisterUserRoutes() {
 
 	usersRouter.Get("/", handlers.GetAllUsersHandler)
 	usersRouter.Get("/psychologists", handlers.GetAllPsychologistsHandler)
+	usersRouter.Get("/me", handlers.GetMeHandler)
 	usersRouter.Post("/", handlers.CreateUserHandler)
 	usersRouter.Patch("/", handlers.UpdateUserHandler)
 	usersRouter.Delete("/:id", handlers.DeleteUserHandler)
@@ -21,6 +22,16 @@ func (s *FiberServer) RegisterMessagesRoutes() {
 	messagesRouter.Post("/", handlers.CreateMessageHandler)
 	messagesRouter.Patch("/", handlers.UpdateMessageHandler)
 	messagesRouter.Delete("/:id", handlers.DeleteMessageHandler)
+}
+
+func (s *FiberServer) RegisterArticleRoutes() {
+	articleRouter := s.Group("/article")
+	articleRouter.Use(handlers.AuthMiddleware)
+
+	articleRouter.Get("/", handlers.GetAllArticlesHandler)
+	articleRouter.Post("/", handlers.CreateArticleHandler)
+	articleRouter.Patch("/", handlers.UpdateArticleHandler)
+	articleRouter.Delete("/:id", handlers.DeleteArticleHandler)
 }
 
 func (s *FiberServer) RegisterTherapyGroupRoutes() {

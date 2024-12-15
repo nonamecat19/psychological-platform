@@ -3,7 +3,7 @@ import { socket } from '@core/lib/socket'
 import { useCurrentChatStore } from '@chats/store/currentChat.ts'
 
 export function useCurrentChatSubscription(chatId: number) {
-  const event = `SEND_MESSAGE`
+  const event = `SEND_MESSAGE_PRIVATE`
 
   const currentChatStore = useCurrentChatStore()
 
@@ -17,7 +17,7 @@ export function useCurrentChatSubscription(chatId: number) {
   })
 
   onUnmounted(() => {
-    socket.off(event)
+    socket.off(`${event}:${chatId}`)
     socket.disconnect()
   })
 

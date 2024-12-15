@@ -7,6 +7,13 @@ import (
 	"strconv"
 )
 
+func GetMeHandler(c *fiber.Ctx) error {
+	info := GetUserAuthInfo(c)
+	usersRepository := repository.NewUserRepository()
+	user, _ := usersRepository.GetOne(info.ID)
+	return c.JSON(user)
+}
+
 func GetAllUsersHandler(c *fiber.Ctx) error {
 	usersRepository := repository.NewUserRepository()
 	users, _ := usersRepository.FindAll()
