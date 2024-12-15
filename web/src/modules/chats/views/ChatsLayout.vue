@@ -16,6 +16,7 @@ const router = useRouter()
 
 function selectChat(id: number) {
   currentChatStore.setCurrentChatId(id)
+  currentChatStore.initCurrentChatId()
   router.push(`/chat/${id}`)
 }
 </script>

@@ -29,20 +29,27 @@ func (r *PrivateChatRepository) FindAll() ([]model.PrivateChat, error) {
 
 func (r *PrivateChatRepository) FindById(id uint) ([]model.PrivateChat, error) {
 	var chats []model.PrivateChat
-	err := r.db.Preload("Messages").Where("id = ?", id).Find(&chats).Error
+	err := r.db.Preload("Messages").Preload("Specialist").Preload("Client").Where("id = ?", id).Find(&chats).Error
 	return chats, err
 }
 
 func (r *PrivateChatRepository) FindAllByClient(id uint) ([]model.PrivateChat, error) {
 	var chats []model.PrivateChat
-	err := r.db.Where("client_id = ?", id).Find(&chats).Error
+	err := r.db.Where("client_id = ?", id).Preload("Specialist").Find(&chats).Error
 	return chats, err
 }
 
 func (r *PrivateChatRepository) FindAllBySpecialist(id uint) ([]model.PrivateChat, error) {
 	var chats []model.PrivateChat
-	err := r.db.Where("specialist_id = ?", id).Find(&chats).Error
-	return chats, err
+	err := r.db.Where("specialist_id = ?", id).
+		Preload("Client", func(db *gorm.DB) *gorm.DB {
+			return db.Where("\"users\".\"is_anonymous\" = FALSE")
+		}).
+		Find(&chats).Error
+	if err != nil {
+		return nil, err
+	}
+	return chats, nil
 }
 
 func (r *PrivateChatRepository) FindConcreteChat(clientID, specialistID uint) (model.PrivateChat, error) {

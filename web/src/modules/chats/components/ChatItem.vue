@@ -20,8 +20,10 @@ function handleClick() {
 <template>
   <button
     :class="[
-      'flex items-center gap-2 p-2 hover:bg-gray-900 duration-200 w-full',
-      selected && 'bg-white hover:bg-gray-50 text-gray-900',
+      'flex items-center gap-2 p-2 duration-200 w-full',
+      selected
+        ? 'bg-white hover:bg-gray-50 text-gray-900'
+        : 'bg-gray-800 hover:bg-gray-900',
     ]"
     @click="handleClick"
   >

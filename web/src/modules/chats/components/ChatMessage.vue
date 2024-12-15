@@ -13,7 +13,7 @@ const props = defineProps({
 <template>
   <div
     :class="[
-      'p-2',
+      'p-2 rounded-md',
       props.isMine ? 'bg-white text-black' : 'bg-zinc-600 text-white',
     ]"
   >

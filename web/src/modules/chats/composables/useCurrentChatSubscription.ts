@@ -9,9 +9,7 @@ export function useCurrentChatSubscription(chatId: number) {
 
   onMounted(() => {
     socket.connect()
-    console.log({ chatId })
     socket.on(`${event}:${chatId}`, (data: string) => {
-      console.log({ data })
       currentChatStore.addMessage(JSON.parse(data))
     })
   })

@@ -6,7 +6,7 @@ import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import { useCurrentChatSubscription } from '@chats/composables/useCurrentChatSubscription'
 import ChatMessage from '@chats/components/ChatMessage.vue'
-import { useMe } from '@core/composables/useMe.ts'
+import { useCurrentUserStore } from '@core/stores/useCurrentUserStore.ts'
 
 const route = useRoute()
 
@@ -26,9 +26,7 @@ async function handleSendMessage() {
   inputValue.value = ''
 }
 
-const { getDecodedToken } = useMe()
-
-const me = getDecodedToken()
+const currentUserStore = useCurrentUserStore()
 
 const inputValue = ref<string>('')
 </script>
@@ -38,7 +36,7 @@ const inputValue = ref<string>('')
       <ChatMessage
         v-for="message of currentChatStore?.data?.Messages"
         :text="message.Content"
-        :is-mine="message.UserID === me.ID"
+        :is-mine="message.UserID === currentUserStore.data.ID"
       />
     </div>
     <div class="p-2 pt-0 w-full flex gap-2">

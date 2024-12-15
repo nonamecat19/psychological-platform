@@ -1,13 +1,8 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { useMe } from '@core/composables/useMe.ts'
+import { useCurrentUserStore } from '@core/stores/useCurrentUserStore.ts'
 
-const isLogged = !!localStorage.getItem('token')
-
-const { getDecodedToken } = useMe()
-
-const me = getDecodedToken()
-
+const currentUserStore = useCurrentUserStore()
 const router = useRouter()
 
 function handleLogout() {
@@ -22,12 +17,18 @@ function handleLogout() {
       <div class="flex gap-2">
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/chat">Chats</RouterLink>
-        <RouterLink v-if="me?.role === 'user'" to="/users/psychologists"
+        <RouterLink
+          v-if="currentUserStore.data?.role === 'user'"
+          to="/users/psychologists"
           >Psychologists
         </RouterLink>
-        <RouterLink v-if="me" to="/profile">Profile</RouterLink>
+        <RouterLink v-if="currentUserStore.data" to="/profile"
+          >Profile</RouterLink
+        >
       </div>
-      <button v-if="isLogged" @click="handleLogout">Logout</button>
+      <button v-if="currentUserStore.isLoggedIn" @click="handleLogout">
+        Logout
+      </button>
       <RouterLink v-else to="/auth/login">Login</RouterLink>
     </header>
     <hr />
