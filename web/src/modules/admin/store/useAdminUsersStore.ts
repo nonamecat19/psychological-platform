@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { api } from '@core/lib/axios.ts'
 
-export const useUsersStore = defineStore('admin-users', () => {
+export const useAdminUsersStore = defineStore('admin-users', () => {
   const data = ref()
 
   function setData(value: unknown) {

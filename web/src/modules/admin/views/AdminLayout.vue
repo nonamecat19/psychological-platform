@@ -4,15 +4,11 @@ const links = [
     title: 'Users',
     href: '/admin/users',
   },
-  {
-    title: 'Therapy groups',
-    href: '/admin/therapyGroups',
-  },
 ]
 </script>
 <template>
-  <main class="flex gap-5">
-    <div class="w-80">
+  <main class="flex gap-2 h-full">
+    <div class="w-80 bg-zinc-900">
       <div v-for="{ title, href } in links">
         <RouterLink :to="href">
           {{ title }}

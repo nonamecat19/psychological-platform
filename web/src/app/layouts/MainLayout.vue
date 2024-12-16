@@ -14,7 +14,7 @@ function handleLogout() {
 <template>
   <main>
     <header class="w-full flex justify-between p-4 overflow-hidden">
-      <div class="flex gap-2">
+      <div class="flex gap-8">
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/chat">Chats</RouterLink>
         <RouterLink
@@ -26,10 +26,13 @@ function handleLogout() {
           >Profile</RouterLink
         >
       </div>
-      <button v-if="currentUserStore.isLoggedIn" @click="handleLogout">
-        Logout
-      </button>
-      <RouterLink v-else to="/auth/login">Login</RouterLink>
+      <div class="flex gap-8">
+        <RouterLink to="/admin">Admin</RouterLink>
+        <button v-if="currentUserStore.isLoggedIn" @click="handleLogout">
+          Logout
+        </button>
+        <RouterLink v-else to="/auth/login">Login</RouterLink>
+      </div>
     </header>
     <hr />
     <div class="h-[calc(100vh-57px)]">
