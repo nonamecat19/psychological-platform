@@ -27,6 +27,18 @@ func (r *TherapyGroupRepository) FindAll() ([]model.TherapyGroup, error) {
 	return groups, err
 }
 
+func (r *TherapyGroupRepository) FindAllBySpecialist(id uint) ([]model.TherapyGroup, error) {
+	var groups []model.TherapyGroup
+	err := r.db.Where("specialist_id = ?", id).Preload("Specialist").Find(&groups).Error
+	return groups, err
+}
+
+func (r *TherapyGroupRepository) FindById(id uint) ([]model.TherapyGroup, error) {
+	var groups []model.TherapyGroup
+	err := r.db.Preload("Messages").Preload("Specialist").Where("id = ?", id).Find(&groups).Error
+	return groups, err
+}
+
 func (r *TherapyGroupRepository) GetOne(id uint) (model.TherapyGroup, error) {
 	var group model.TherapyGroup
 	err := r.db.First(&group, id).Error

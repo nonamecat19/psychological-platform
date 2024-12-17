@@ -6,7 +6,8 @@ import (
 
 type Message struct {
 	gorm.Model
-	UserID        uint
-	Content       string `gorm:"type:text"`
-	PrivateChatID *uint
+	UserID         uint
+	Content        string `gorm:"type:text"`
+	PrivateChatID  *uint
+	TherapyGroupID *uint
 }

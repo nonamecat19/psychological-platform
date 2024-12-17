@@ -15,19 +15,26 @@ function handleLogout() {
   <main>
     <header class="w-full flex justify-between p-4 overflow-hidden">
       <div class="flex gap-8">
-        <RouterLink to="/">Home</RouterLink>
+        <div class="text-emerald-500">
+          {{ currentUserStore.data.email }} {{ currentUserStore.data.role }}
+        </div>
+
         <RouterLink to="/chat">Chats</RouterLink>
         <RouterLink
           v-if="currentUserStore.data?.role === 'user'"
           to="/users/psychologists"
-          >Psychologists
-        </RouterLink>
-        <RouterLink v-if="currentUserStore.data" to="/profile"
-          >Profile</RouterLink
         >
+          Psychologists
+        </RouterLink>
+        <RouterLink v-if="currentUserStore.data" to="/profile">
+          Profile
+        </RouterLink>
+        <RouterLink v-if="currentUserStore.data" to="/therapy-groups">
+          Therapy groups
+        </RouterLink>
       </div>
       <div class="flex gap-8">
-        <RouterLink to="/admin">Admin</RouterLink>
+        <RouterLink to="/admin"> Admin</RouterLink>
         <button v-if="currentUserStore.isLoggedIn" @click="handleLogout">
           Logout
         </button>

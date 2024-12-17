@@ -5,6 +5,7 @@ import { adminRouter } from '../modules/admin'
 import { authRouter } from '../modules/auth'
 import { usersRouter } from '../modules/users'
 import { profileRouter } from '../modules/profile'
+import { therapyGroupRouter } from '../modules/therapyGroups'
 import MainLayout from '@app/layouts/MainLayout.vue'
 import { useCurrentUserStore } from '@core/stores/useCurrentUserStore.ts'
 
@@ -15,6 +16,7 @@ const routes = [
   authRouter,
   usersRouter,
   profileRouter,
+  therapyGroupRouter,
 ]
 
 export const appRouter = createRouter({

@@ -19,6 +19,9 @@
       "@chats/*": [
         "./src/modules/chats/*"
       ],
+      "@therapyGroups/*": [
+        "./src/modules/therapyGroups/*"
+      ],
       "@support/*": [
         "./src/modules/support/*"
       ],

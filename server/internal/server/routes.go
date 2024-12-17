@@ -39,6 +39,8 @@ func (s *FiberServer) RegisterTherapyGroupRoutes() {
 	therapyGroupRouter.Use(handlers.AuthMiddleware)
 
 	therapyGroupRouter.Get("/", handlers.GetAllTherapyGroupsHandler)
+	therapyGroupRouter.Get("/my", handlers.GetAllMyTherapyGroupsHandler)
+	therapyGroupRouter.Get("/:id", handlers.GetTherapyGroupByIdHandler)
 	therapyGroupRouter.Post("/", handlers.CreateTherapyGroupHandler)
 	therapyGroupRouter.Patch("/", handlers.UpdateTherapyGroupHandler)
 	therapyGroupRouter.Delete("/:id", handlers.DeleteTherapyGroupHandler)

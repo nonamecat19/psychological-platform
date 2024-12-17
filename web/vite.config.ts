@@ -24,6 +24,12 @@ export default defineConfig({
         ),
       },
       {
+        find: '@therapyGroups',
+        replacement: fileURLToPath(
+          new URL('./src/modules/therapyGroups', import.meta.url),
+        ),
+      },
+      {
         find: '@support',
         replacement: fileURLToPath(
           new URL('./src/modules/support', import.meta.url),
