@@ -45,7 +45,7 @@ const visible = ref<boolean>(false)
       <div class="p-2">
         <Button
           @click="visible = true"
-          v-if="currentUserStore.data.role === 'psychologist'"
+          v-if="currentUserStore?.data?.role === 'psychologist'"
           class="w-full"
         >
           Add new

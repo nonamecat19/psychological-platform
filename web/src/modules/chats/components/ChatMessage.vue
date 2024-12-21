@@ -7,6 +7,9 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  userName: {
+    type: String,
+  },
 })
 </script>
 
@@ -17,6 +20,11 @@ const props = defineProps({
       props.isMine ? 'bg-white text-black' : 'bg-zinc-600 text-white',
     ]"
   >
-    {{ text }}
+    <div class="text-emerald-500">
+      {{ userName }}
+    </div>
+    <div>
+      {{ text }}
+    </div>
   </div>
 </template>

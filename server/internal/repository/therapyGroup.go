@@ -34,9 +34,32 @@ func (r *TherapyGroupRepository) FindAllBySpecialist(id uint) ([]model.TherapyGr
 }
 
 func (r *TherapyGroupRepository) FindById(id uint) ([]model.TherapyGroup, error) {
+	var users []model.User
+	err := r.db.Where("is_anonymous = FALSE").Find(&users).Error
+	if err != nil {
+		return nil, err
+	}
+
 	var groups []model.TherapyGroup
-	err := r.db.Preload("Messages").Preload("Specialist").Where("id = ?", id).Find(&groups).Error
-	return groups, err
+	err = r.db.Preload("Messages").Preload("Specialist").Where("id = ?", id).Find(&groups).Error
+	if err != nil {
+		return nil, err
+	}
+
+	for _, group := range groups {
+		userMap := make(map[uint]model.User)
+		for _, user := range users {
+			userMap[user.ID] = user
+		}
+
+		for i, message := range group.Messages {
+			if user, exists := userMap[message.UserID]; exists {
+				group.Messages[i].User = &user
+			}
+		}
+	}
+
+	return groups, nil
 }
 
 func (r *TherapyGroupRepository) GetOne(id uint) (model.TherapyGroup, error) {

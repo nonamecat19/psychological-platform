@@ -36,7 +36,7 @@ const inputValue = ref<string>('')
       <ChatMessage
         v-for="message of currentChatStore?.data?.Messages"
         :text="message.Content"
-        :is-mine="message.UserID === currentUserStore.data.ID"
+        :is-mine="message.UserID === currentUserStore?.data?.ID"
       />
     </div>
     <div class="p-2 pt-0 w-full flex gap-2">

@@ -10,4 +10,5 @@ type Message struct {
 	Content        string `gorm:"type:text"`
 	PrivateChatID  *uint
 	TherapyGroupID *uint
+	User           *User `gorm:"-"`
 }

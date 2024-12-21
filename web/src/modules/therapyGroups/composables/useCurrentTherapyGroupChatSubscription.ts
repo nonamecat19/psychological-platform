@@ -9,8 +9,8 @@ export function useCurrentTherapyGroupChatSubscription(chatId: number) {
 
   onMounted(() => {
     socket.connect()
-    socket.on(`${event}:${chatId}`, (data: string) => {
-      store.addMessage(JSON.parse(data))
+    socket.on(`${event}:${chatId}`, () => {
+      void store.initCurrentTherapyGroupId()
     })
   })
 

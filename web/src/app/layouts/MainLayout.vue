@@ -16,20 +16,20 @@ function handleLogout() {
     <header class="w-full flex justify-between p-4 overflow-hidden">
       <div class="flex gap-8">
         <div class="text-emerald-500">
-          {{ currentUserStore.data.email }} {{ currentUserStore.data.role }}
+          {{ currentUserStore?.data?.email }} {{ currentUserStore?.data?.role }}
         </div>
 
         <RouterLink to="/chat">Chats</RouterLink>
         <RouterLink
-          v-if="currentUserStore.data?.role === 'user'"
+          v-if="currentUserStore?.data?.role === 'user'"
           to="/users/psychologists"
         >
           Psychologists
         </RouterLink>
-        <RouterLink v-if="currentUserStore.data" to="/profile">
+        <RouterLink v-if="currentUserStore?.data" to="/profile">
           Profile
         </RouterLink>
-        <RouterLink v-if="currentUserStore.data" to="/therapy-groups">
+        <RouterLink v-if="currentUserStore?.data" to="/therapy-groups">
           Therapy groups
         </RouterLink>
       </div>
